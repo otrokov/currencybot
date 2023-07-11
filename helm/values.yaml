@@ -2,7 +2,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/otrokov
-  tag: "v1.0.9-04af987"
+  tag: "v1.0.9-548ed91"
   os: "linux"
   arch: "amd64"
 secret:
