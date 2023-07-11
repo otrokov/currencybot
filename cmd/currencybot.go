@@ -54,7 +54,7 @@ to quickly create a Cobra application.`,
 			log.Print(payload)
 
 			switch payload {
-			case "usd":
+			case "USD":
 				// Monobank
 				client := resty.New()
 				resp, err := client.R().Get("https://api.monobank.ua/bank/currency")
@@ -112,7 +112,69 @@ to quickly create a Cobra application.`,
 					rateBuyMono, rateSellMono, rateBuyPrivat, rateSellPrivat)
 				log.Printf("The response is %s", response)
 				currencybot.Send(m.Sender(), response)
+			case "EUR":
+				// Monobank
+				client := resty.New()
+				resp, err := client.R().Get("https://api.monobank.ua/bank/currency")
+				if err != nil {
+					//currencybot.Reply(m, "Ошибка при получении данных с API Monobank.")
+					return err
+				}
+				defer resp.RawResponse.Body.Close()
 
+				var data []map[string]interface{}
+				err = json.Unmarshal(resp.Body(), &data)
+				/*if err != nil {
+					currencybot.Reply(m, "Ошибка при обработке данных с API Monobank.")
+					return err
+				}*/
+
+				var rateBuyMono, rateSellMono float64
+				for _, item := range data {
+					currencyCodeA := item["currencyCodeA"].(float64)
+					currencyCodeB := item["currencyCodeB"].(float64)
+					if currencyCodeA == 978 && currencyCodeB == 980 {
+						rateBuyMono = item["rateBuy"].(float64)
+						rateSellMono = item["rateSell"].(float64)
+						break
+					}
+				}
+
+				// Privatbank
+				resp, err = client.R().Get("https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5")
+				/*if err != nil {
+					currencybot.Reply(m, "Ошибка при получении данных с API Privatbank.")
+					return err
+				}*/
+				defer resp.RawResponse.Body.Close()
+
+				var dataPrivat []map[string]interface{}
+				err = json.Unmarshal(resp.Body(), &dataPrivat)
+				/*if err != nil {
+					currencybot.Reply(m, "Ошибка при обработке данных с API Privatbank.")
+					return err
+				}*/
+
+				var rateBuyPrivat, rateSellPrivat float64
+				for _, item := range dataPrivat {
+					ccy := item["ccy"].(string)
+					baseCcy := item["base_ccy"].(string)
+					if ccy == "EUR" && baseCcy == "UAH" {
+						rateBuyPrivat, _ = strconv.ParseFloat(item["buy"].(string), 64)
+						rateSellPrivat, _ = strconv.ParseFloat(item["sale"].(string), 64)
+						break
+					}
+				}
+
+				response := fmt.Sprintf("Курс євро:\n\n"+"Monobank: %.2f / %.2f\n"+"Privatbank: %.2f / %.2f",
+					rateBuyMono, rateSellMono, rateBuyPrivat, rateSellPrivat)
+				log.Printf("The response is %s", response)
+				currencybot.Send(m.Sender(), response)
+				default:
+				esponse := fmt.Sprintf("виберіть валюту. введіть: USD чи  EUR")
+				log.Printf("The response is %s", response)
+				currencybot.Send(m.Sender(), response)
+	
 			}
 
 			return err
