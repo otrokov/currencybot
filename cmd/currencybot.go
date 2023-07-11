@@ -22,15 +22,17 @@ var (
 	Teletoken = os.Getenv("TELE_TOKEN")
 )
 
-var botCmd = &cobra.Command{
-	Use:   "currencybot",
-	Short: "A brief description of your command",
+var currencybotCmd = &cobra.Command{
+	Use:     "currencybot",
+	Aliases: []string{"start"},
+	Short:   "start bot",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
+
 	Run: func(cmd *cobra.Command, args []string) {
 
 		fmt.Printf("currencybot %s started", appVersion)
@@ -52,7 +54,7 @@ to quickly create a Cobra application.`,
 			log.Print(payload)
 
 			switch payload {
-			case "start":
+			case "usd":
 				// Monobank
 				client := resty.New()
 				resp, err := client.R().Get("https://api.monobank.ua/bank/currency")
