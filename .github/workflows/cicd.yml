@@ -34,7 +34,7 @@ jobs:
           REGISTRY: ghcr.io
           TARGETARCH: amd64
           TARGETOS: linux
-           VERSION: ${(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)}
+           VERSION: v1.0.9
         run: make image push 
   
 
