@@ -23,9 +23,9 @@ build: format
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH}	go build -v -o currencybot -ldflags "-X="github.com/otrokov/currencybot/cmd.appVersion=${VERSION}
 
 image:
-	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
+	docker build . -t ${REGISTRY}/${NAME}:${VERSION}-${TARGETOS}-${TARGETARCH}
 push:
-	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
+	docker push ${REGISTRY}/${NAME}:${VERSION}-${TARGETOS}-${TARGETARCH}
 
 
 
