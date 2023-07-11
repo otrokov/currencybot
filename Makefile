@@ -31,4 +31,4 @@ push:
 
 clean:
 	rm -rf currencybot
-	docker rmi ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
+	docker rmi ${REGISTRY}/${NAME}:${VERSION}-${TARGETOS}-${TARGETARCH}
