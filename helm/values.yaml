@@ -1,7 +1,7 @@
 
 replicaCount: 1
 image:
-  repository: otrokov\currencybot
+  repository: ghcr.io/otrokov
   tag: "v1.0.8"
   os: "linux"
   arch: "amd64"
