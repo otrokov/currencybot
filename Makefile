@@ -3,7 +3,7 @@ REGISTRY := ghcr.io/otrokov
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 TARGETOS=linux
 TARGETARCH =amd64
-IMAGE := ghcr.io/otrokov/currencybot:${VERSION}-${TARGETOS}-${TARGETARCH}
+IMAGE := ${REGISTRY}/${NAME}:${VERSION}-${TARGETOS}-${TARGETARCH}
 NAME := currencybot
 
 format:
