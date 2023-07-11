@@ -171,7 +171,7 @@ to quickly create a Cobra application.`,
 				log.Printf("The response is %s", response)
 				currencybot.Send(m.Sender(), response)
 				default:
-				esponse := fmt.Sprintf("виберіть валюту. введіть: USD чи  EUR")
+				response := fmt.Sprintf("виберіть валюту. введіть: USD чи  EUR")
 				log.Printf("The response is %s", response)
 				currencybot.Send(m.Sender(), response)
 	
