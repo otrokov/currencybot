@@ -1,0 +1,18 @@
+
+replicaCount: 1
+image:
+  repository: otrokov\currencybot
+  tag: "v1.0.8
+  os: "linux"
+  arch: "amd64"
+secret:
+  name: "currencybot"
+  tokenname: "TELE_TOKEN"
+  tokenkey: "token"
+securityContext:
+  privileged: true
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
