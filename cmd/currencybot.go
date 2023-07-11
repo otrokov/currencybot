@@ -22,7 +22,7 @@ var (
 	Teletoken = os.Getenv("TELE_TOKEN")
 )
 
-var currencybotCmd = &cobra.Command{
+var botCmd = &cobra.Command{
 	Use:     "currencybot",
 	Aliases: []string{"start"},
 	Short:   "start bot",
