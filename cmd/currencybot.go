@@ -49,9 +49,8 @@ to quickly create a Cobra application.`,
 		}
 
 		currencybot.Handle(telebot.OnText, func(m telebot.Context) error {
-			log.Printf(m.Message().Payload, m.Text())
+
 			payload := m.Message().Payload
-			log.Print(payload)
 
 			switch payload {
 			case "USD":
