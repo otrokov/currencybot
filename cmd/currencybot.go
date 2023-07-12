@@ -59,17 +59,17 @@ to quickly create a Cobra application.`,
 				client := resty.New()
 				resp, err := client.R().Get("https://api.monobank.ua/bank/currency")
 				if err != nil {
-					//currencybot.Reply(m, "Ошибка при получении данных с API Monobank.")
+					err := m.Send("Ошибка при получении данных с API Monobank.")
 					return err
 				}
 				defer resp.RawResponse.Body.Close()
 
 				var data []map[string]interface{}
 				err = json.Unmarshal(resp.Body(), &data)
-				/*if err != nil {
-					currencybot.Reply(m, "Ошибка при обработке данных с API Monobank.")
+				if err != nil {
+					err := m.Send("Ошибка при обработке данных с API Monobank.")
 					return err
-				}*/
+				}
 
 				var rateBuyMono, rateSellMono float64
 				for _, item := range data {
@@ -84,18 +84,18 @@ to quickly create a Cobra application.`,
 
 				// Privatbank
 				resp, err = client.R().Get("https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5")
-				/*if err != nil {
-					currencybot.Reply(m, "Ошибка при получении данных с API Privatbank.")
+				if err != nil {
+					err := m.Send("Ошибка при получении данных с API Privatbank.")
 					return err
-				}*/
+				}
 				defer resp.RawResponse.Body.Close()
 
 				var dataPrivat []map[string]interface{}
 				err = json.Unmarshal(resp.Body(), &dataPrivat)
-				/*if err != nil {
-					currencybot.Reply(m, "Ошибка при обработке данных с API Privatbank.")
+				if err != nil {
+					err := m.Send("Ошибка при обработке данных с API Privatbank.")
 					return err
-				}*/
+				}
 
 				var rateBuyPrivat, rateSellPrivat float64
 				for _, item := range dataPrivat {
@@ -112,22 +112,23 @@ to quickly create a Cobra application.`,
 					rateBuyMono, rateSellMono, rateBuyPrivat, rateSellPrivat)
 				log.Printf("The response is %s", response)
 				currencybot.Send(m.Sender(), response)
+
 			case "EUR":
 				// Monobank
 				client := resty.New()
 				resp, err := client.R().Get("https://api.monobank.ua/bank/currency")
 				if err != nil {
-					//currencybot.Reply(m, "Ошибка при получении данных с API Monobank.")
+					err := m.Send("Ошибка при получении данных с API Monobank.")
 					return err
 				}
 				defer resp.RawResponse.Body.Close()
 
 				var data []map[string]interface{}
 				err = json.Unmarshal(resp.Body(), &data)
-				/*if err != nil {
-					currencybot.Reply(m, "Ошибка при обработке данных с API Monobank.")
+				if err != nil {
+					err := m.Send("Ошибка при обработке данных с API Monobank.")
 					return err
-				}*/
+				}
 
 				var rateBuyMono, rateSellMono float64
 				for _, item := range data {
@@ -142,18 +143,18 @@ to quickly create a Cobra application.`,
 
 				// Privatbank
 				resp, err = client.R().Get("https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5")
-				/*if err != nil {
-					currencybot.Reply(m, "Ошибка при получении данных с API Privatbank.")
+				if err != nil {
+					err := m.Send("Ошибка при получении данных с API Privatbank.")
 					return err
-				}*/
+				}
 				defer resp.RawResponse.Body.Close()
 
 				var dataPrivat []map[string]interface{}
 				err = json.Unmarshal(resp.Body(), &dataPrivat)
-				/*if err != nil {
-					currencybot.Reply(m, "Ошибка при обработке данных с API Privatbank.")
+				if err != nil {
+					err := m.Send("Ошибка при обработке данных с API Privatbank.")
 					return err
-				}*/
+				}
 
 				var rateBuyPrivat, rateSellPrivat float64
 				for _, item := range dataPrivat {
@@ -170,11 +171,11 @@ to quickly create a Cobra application.`,
 					rateBuyMono, rateSellMono, rateBuyPrivat, rateSellPrivat)
 				log.Printf("The response is %s", response)
 				currencybot.Send(m.Sender(), response)
-				default:
-				response := fmt.Sprintf("виберіть валюту. введіть: USD чи  EUR")
+			default:
+				response := ("виберіть валюту. введіть: USD чи  EUR")
 				log.Printf("The response is %s", response)
 				currencybot.Send(m.Sender(), response)
-	
+
 			}
 
 			return err
